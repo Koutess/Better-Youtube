@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#0b0b0d">
+  <title>LTX</title>
+  <link rel="stylesheet" href="/src/styles.css">
+</head>
+<body>
+  <div class="app-shell">
+
+    <aside class="sidebar">
+      <div class="brand">
+        <span class="brand-symbol">L</span>
+        <span>LTX</span>
+        <span class="version">0.1</span>
+      </div>
+
+      <div class="nav-label">DISCOVER</div>
+
+      <nav>
+        <button class="nav-item active" data-view="home">
+          <span>⌂</span> Home
+        </button>
+        <button class="nav-item" data-view="explore">
+          <span>◈</span> Explore
+        </button>
+        <button class="nav-item" data-view="history">
+          <span>◷</span> History
+        </button>
+        <button class="nav-item" data-view="watch-later">
+          <span>▣</span> Watch later
+        </button>
+      </nav>
+
+      <div class="nav-divider"></div>
+
+      <div class="playlist-heading">
+        <span class="nav-label">YOUR PLAYLISTS</span>
+        <button id="newPlaylist" title="New playlist">+</button>
+      </div>
+
+      <div id="playlistNav" class="playlist-nav"></div>
+
+      <div class="sidebar-bottom">
+        <button id="miniToggle" class="nav-item">
+          <span>▣</span> Compact mode
+        </button>
+        <button id="settingsButton" class="nav-item">
+          <span>⚙</span> Settings
+        </button>
+      </div>
+    </aside>
+
+    <main class="main">
+
+      <header class="topbar">
+        <div class="search-wrap">
+          <form id="searchForm" class="search">
+            <input
+              id="searchInput"
+              type="search"
+              placeholder="Search videos, channels..."
+              autocomplete="off"
+            >
+            <button type="submit">⌕</button>
+          </form>
+        </div>
+
+        <div class="top-actions">
+          <span class="status-dot"></span>
+          <span class="status-text">LTX</span>
+          <button id="topSettings" class="icon-button">⚙</button>
+        </div>
+      </header>
+
+      <div class="category-bar" id="categoryBar">
+        <button class="category active" data-category="">All</button>
+        <button class="category" data-category="10">Music</button>
+        <button class="category" data-category="20">Gaming</button>
+        <button class="category" data-category="27">Education</button>
+        <button class="category" data-category="25">News</button>
+        <button class="category" data-category="28">Science</button>
+      </div>
+
+      <div class="content-layout">
+
+        <div class="feed">
+
+          <section class="player-panel">
+            <div class="player-container">
+              <div id="playerMount"></div>
+              <div id="playerPlaceholder" class="player-placeholder">
+                <div class="placeholder-logo">L</div>
+                <h2>Make yourself at home.</h2>
+                <p>Search for a video or select something to watch.</p>
+              </div>
+            </div>
+
+            <div class="player-controls">
+              <div class="transport">
+                <button id="previousButton" title="Previous">|◀</button>
+                <button id="backButton" title="Back 10 seconds">↶10</button>
+                <button id="playButton" class="play-button">▶</button>
+                <button id="forwardButton" title="Forward 10 seconds">10↷</button>
+                <button id="nextButton" title="Next">▶|</button>
+              </div>
+
+              <div class="timeline">
+                <input
+                  id="seekBar"
+                  type="range"
+                  min="0"
+                  max="100"
+                  value="0"
+                >
+                <div class="time-display">
+                  <span id="currentTime">0:00</span>
+                  <span id="duration">0:00</span>
+                </div>
+              </div>
+
+              <div class="player-options">
+                <button id="muteButton" title="Mute">♪</button>
+
+                <input
+                  id="volumeSlider"
+                  type="range"
+                  min="0"
+                  max="100"
+                  value="80"
+                  aria-label="Volume"
+                >
+
+                <select id="speedSelect" aria-label="Playback speed">
+                  <option value="0.5">0.5×</option>
+                  <option value="0.75">0.75×</option>
+                  <option value="1" selected>1×</option>
+                  <option value="1.25">1.25×</option>
+                  <option value="1.5">1.5×</option>
+                  <option value="1.75">1.75×</option>
+                  <option value="2">2×</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="now-playing">
+              <div class="now-playing-info">
+                <span class="eyebrow">NOW PLAYING</span>
+                <h2 id="currentTitle">Nothing playing</h2>
+                <p id="currentChannel">Select a video to get started.</p>
+              </div>
+
+              <div class="now-playing-actions">
+                <button id="queueCurrent" class="secondary-button">
+                  + Queue
+                </button>
+                <button id="saveCurrent" class="secondary-button">
+                  ♡ Save
+                </button>
+              </div>
+            </div>
+          </section>
+
+          <section class="video-section">
+            <div class="section-heading">
+              <div>
+                <h2 id="feedTitle">Recommended</h2>
+                <p id="feedStatus">Discover something new.</p>
+              </div>
+
+              <button id="refreshButton" class="secondary-button">
+                Refresh ↻
+              </button>
+            </div>
+
+            <div id="videoGrid" class="video-grid"></div>
+          </section>
+
+        </div>
+
+        <aside class="queue-panel">
+          <div class="queue-header">
+            <div>
+              <h3>Up next</h3>
+              <p>YOUR QUEUE</p>
+            </div>
+
+            <button id="clearQueue" class="text-button">Clear</button>
+          </div>
+
+          <div id="queueList" class="queue-list"></div>
+
+          <div class="queue-footer">
+            <span id="queueCount">0 videos</span>
+            <label class="autoplay-toggle">
+              <input id="autoPlayQueue" type="checkbox" checked>
+              Autoplay
+            </label>
+          </div>
+        </aside>
+
+      </div>
+    </main>
+  </div>
+
+  <dialog id="settingsDialog" class="settings-dialog">
+    <form id="settingsForm">
+      <div class="dialog-header">
+        <div>
+          <span class="eyebrow">PREFERENCES</span>
+          <h2>Settings</h2>
+        </div>
+        <button type="button" id="closeSettings" class="icon-button">×</button>
+      </div>
+
+      <div class="setting-group">
+        <label for="apiKey">YouTube Data API key</label>
+        <input
+          id="apiKey"
+          type="password"
+          placeholder="Enter your API key"
+          autocomplete="off"
+        >
+        <p>Stored locally on this device. Never commit this key to GitHub.</p>
+      </div>
+
+      <div class="setting-group">
+        <label for="regionCode">Content region</label>
+        <select id="regionCode">
+          <option value="NL">Netherlands</option>
+          <option value="US">United States</option>
+          <option value="GB">United Kingdom</option>
+          <option value="DE">Germany</option>
+        </select>
+      </div>
+
+      <div class="setting-group">
+        <label for="accent">Accent color</label>
+        <select id="accent">
+          <option value="red">LTX Red</option>
+          <option value="crimson">Crimson</option>
+          <option value="neutral">Neutral</option>
+        </select>
+      </div>
+
+      <div class="setting-group setting-row">
+        <div>
+          <label for="alwaysOnTop">Always on top</label>
+          <p>Keep LTX above other windows.</p>
+        </div>
+        <input id="alwaysOnTop" type="checkbox">
+      </div>
+
+      <button class="save-settings" type="submit">
+        Save settings
+      </button>
+    </form>
+  </dialog>
+
+  <div id="toast" class="toast"></div>
+
+  <script type="module" src="/src/main.js"></script>
+</body>
+</html>
